@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Stock Signals</title>
+  <style>
+    body { font-family: Arial; background: #f9f9f9; margin: 0; }
+    header, footer { background: #003366; color: white; text-align: center; padding: 1rem; }
+    #ticker { background: #e91e63; color: white; padding: 10px; white-space: nowrap; overflow: hidden; }
+    #ticker span { display: inline-block; padding-left: 100%; animation: scroll 20s linear infinite; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+    main { padding: 20px; text-align: center; }
+    .card { background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 20px; }
+  </style>
+</head>
+<body>
+<header><h1>📊 Smart Stock Signals</h1></header>
+<div id="ticker"><span>Loading recommendations...</span></div>
+<main>
+  <h2>Live Market Recommendations</h2>
+  <div class="card">
+    <p>Get swing & long-term stock trends updated live using advanced technicals.</p>
+  </div>
+</main>
+<footer>© 2025 Smart Stock Signals</footer>
+<script>
+  async function fetchData() {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/recommendations");
+      const data = await res.json();
+      document.querySelector("#ticker span").innerText = data.recommendations.join(" | ");
+    } catch {
+      document.querySelector("#ticker span").innerText = "⚠️ Failed to load data.";
+    }
+  }
+  window.onload = fetchData;
+</script>
+</body>
+</html>
